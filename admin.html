@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Boshqaruv Paneli | Portfolio Loyihalari</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            950: '#030303',
+                            900: '#070707',
+                            850: '#0c0c0e',
+                            800: '#121216',
+                            700: '#1a1a22',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-[#070709] text-gray-100 font-sans antialiased min-h-screen selection:bg-purple-600 selection:text-white">
+
+    <!-- Auth Login Screen (Protected) -->
+    <div id="auth-screen" class="fixed inset-0 z-50 bg-[#050507] flex items-center justify-center p-4">
+        <div class="w-full max-w-md rounded-3xl border border-white/10 bg-[#0e0e13] p-8 shadow-[0_0_80px_rgba(139,92,246,0.15)] relative">
+            <div class="w-16 h-16 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center mx-auto mb-6 border border-purple-500/20">
+                <i data-lucide="shield-lock" class="w-8 h-8"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-center text-white">Admin Panelga Kirish</h2>
+            <p class="text-xs text-center text-gray-400 mt-2 mb-6">Loyihalarni boshqarish uchun parolni kiriting</p>
+            
+            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1.5">Parol</label>
+                    <input type="password" id="admin-pass" required placeholder="Parol: 1234" 
+                           class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-3.5 text-sm text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 transition">
+                </div>
+                <button type="submit" 
+                        class="w-full rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 py-3.5 text-sm font-bold text-white transition hover:opacity-90 hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] flex items-center justify-center gap-2">
+                    <i data-lucide="log-in" class="w-4 h-4"></i>
+                    <span>Kirish</span>
+                </button>
+                <div class="pt-4 border-t border-white/10 text-center">
+                    <a href="index.html" class="text-xs text-gray-400 hover:text-purple-400 transition flex items-center justify-center gap-1">
+                        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Asosiy saytga qaytish
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Admin Dashboard (Visible after login) -->
+    <div id="admin-dashboard" class="hidden">
+        
+        <!-- Header -->
+        <header class="border-b border-white/10 bg-[#09090d]/80 backdrop-blur-xl sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <a href="index.html" class="flex items-center gap-1.5 group">
+                        <span class="text-2xl font-extrabold bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">MK</span>
+                        <span class="text-2xl font-bold text-white">.dev</span>
+                    </a>
+                    <span class="inline-block px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold">
+                        Admin Boshqaruv Paneli
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button onclick="openAddModal()" 
+                            class="rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-bold text-white hover:opacity-90 transition flex items-center gap-2 shadow-[0_0_20px_rgba(168,85,247,0.3)]">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>Yangi Loyiha</span>
+                    </button>
+                    <a href="index.html" 
+                       class="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs sm:text-sm font-semibold text-gray-300 hover:text-white hover:bg-white/10 transition flex items-center gap-2">
+                        <i data-lucide="eye" class="w-4 h-4 text-purple-400"></i>
+                        <span class="hidden sm:inline">Saytni ko'rish</span>
+                    </a>
+                    <button onclick="handleLogout()" 
+                            class="w-10 h-10 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-gray-400 hover:text-red-400 hover:border-red-500/30 transition" title="Chiqish">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+            
+            <!-- Stats & Quick Actions -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-10">
+                <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Jami Loyihalar</p>
+                        <h3 id="stat-total" class="text-3xl font-extrabold text-white mt-1">6</h3>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
+                        <i data-lucide="folder-git-2" class="w-6 h-6"></i>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Kategoriyalar</p>
+                        <h3 class="text-3xl font-extrabold text-white mt-1">3 ta</h3>
+                        <p class="text-[11px] text-gray-500 mt-0.5">Mobile, Veb, UI/UX</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-pink-500/10 text-pink-400 flex items-center justify-center">
+                        <i data-lucide="layers" class="w-6 h-6"></i>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-white/10 bg-[#0e0e13] p-6 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Boshqaruv</p>
+                        <button onclick="resetDefaults()" class="mt-2 text-xs font-semibold text-amber-400 hover:text-amber-300 underline flex items-center gap-1">
+                            <i data-lucide="rotate-ccw" class="w-3 h-3"></i> Standart holatga qaytarish
+                        </button>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
+                        <i data-lucide="database" class="w-6 h-6"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Title -->
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white">Loyihalar Ro'yxati</h2>
+                    <p class="text-xs text-gray-400 mt-1">Loyiha qo'shish, tahrirlash va o'chirish</p>
+                </div>
+                <button onclick="openAddModal()" 
+                        class="inline-flex items-center gap-2 rounded-xl border border-purple-500/30 bg-purple-500/10 px-4 py-2 text-xs font-bold text-purple-300 hover:bg-purple-500 hover:text-white transition">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i> Yangi loyiha qo'shish
+                </button>
+            </div>
+
+            <!-- Admin Projects Grid -->
+            <div id="admin-projects-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Injected via JavaScript -->
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Add / Edit Modal -->
+    <div id="project-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="w-full max-w-2xl rounded-3xl border border-white/15 bg-[#0e0e14] p-6 sm:p-8 shadow-2xl my-8 relative">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+                <h3 id="modal-title" class="text-xl font-bold text-white">Loyihani Tahrirlash</h3>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-white transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="project-form" onsubmit="handleSaveProject(event)" class="space-y-4">
+                <input type="hidden" id="form-project-id">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Project Title -->
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Loyiha Nomi *</label>
+                        <input type="text" id="form-title" required placeholder="Masalan: Sehat" 
+                               class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none transition">
+                    </div>
+
+                    <!-- Category -->
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Kategoriya *</label>
+                        <select id="form-category" required class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white focus:border-purple-500 focus:outline-none transition">
+                            <option value="mobile">Mobile Ilovalar</option>
+                            <option value="web">Veb & Backend</option>
+                            <option value="design">UI/UX & Dizayn</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Badge Text -->
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Karta ustidagi Katta Badge *</label>
+                        <input type="text" id="form-badge" required placeholder="Masalan: Flutter Mobile App" 
+                               class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none transition">
+                    </div>
+
+                    <!-- Small Tag -->
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Kichik Teg *</label>
+                        <input type="text" id="form-badge-type" required placeholder="Masalan: Mobile, CRM, Veb" 
+                               class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none transition">
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Loyiha Haqida Qisqacha Tavsif *</label>
+                    <textarea id="form-description" rows="3" required placeholder="Loyiha nima vazifa bajarishi haqida..." 
+                              class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none transition"></textarea>
+                </div>
+
+                <!-- Tech Stack -->
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Texnologiyalar (Stack) *</label>
+                    <input type="text" id="form-tech-stack" required placeholder="Masalan: Flutter • Dart • Firebase" 
+                           class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none transition">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <!-- Color Theme -->
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Rang Mavzusi</label>
+                        <select id="form-theme" class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white focus:border-purple-500 focus:outline-none transition">
+                            <option value="purple">Binafsha (Purple)</option>
+                            <option value="pink">Pushti (Pink)</option>
+                            <option value="emerald">Yashil (Emerald)</option>
+                            <option value="amber">To'q Sariq (Amber)</option>
+                            <option value="blue">Moviy (Blue)</option>
+                            <option value="violet">Siyohrang (Violet)</option>
+                        </select>
+                    </div>
+
+                    <!-- Icon -->
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Ikonka Nomi</label>
+                        <select id="form-icon" class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white focus:border-purple-500 focus:outline-none transition">
+                            <option value="smartphone">smartphone (Mobil)</option>
+                            <option value="heart-pulse">heart-pulse (Tibbiyot/Salomatlik)</option>
+                            <option value="building-2">building-2 (Klinika/Bino)</option>
+                            <option value="tractor">tractor (Agro)</option>
+                            <option value="shopping-bag">shopping-bag (Do'kon)</option>
+                            <option value="book-open">book-open (Kitob/E-Book)</option>
+                            <option value="figma">figma (Dizayn)</option>
+                            <option value="server">server (Backend)</option>
+                            <option value="globe">globe (Veb sayt)</option>
+                            <option value="code">code (Dastur)</option>
+                            <option value="palette">palette (Rang/San'at)</option>
+                            <option value="layers">layers (Tizim)</option>
+                            <option value="cpu">cpu (Texnologiya)</option>
+                            <option value="shield">shield (Xavfsizlik)</option>
+                            <option value="sparkles">sparkles (Premium)</option>
+                        </select>
+                    </div>
+
+                    <!-- Link / URL -->
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Havola (Link)</label>
+                        <input type="text" id="form-link" placeholder="https://t.me/flutterdevuz_m" 
+                               class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none transition">
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-white/10 flex items-center justify-end gap-3">
+                    <button type="button" onclick="closeModal()" 
+                            class="rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-gray-300 hover:bg-white/10 transition">
+                        Bekor qilish
+                    </button>
+                    <button type="submit" 
+                            class="rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 px-6 py-2.5 text-sm font-bold text-white hover:opacity-90 transition flex items-center gap-2 shadow-[0_0_20px_rgba(168,85,247,0.3)]">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                        <span>Saqlash</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin JS Logic -->
+    <script>
+        const ADMIN_PIN = "1234";
+
+        function checkAuth() {
+            const isAuth = sessionStorage.getItem('mk_admin_auth');
+            if (isAuth === 'true') {
+                document.getElementById('auth-screen').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                renderAdminProjects();
+            } else {
+                document.getElementById('auth-screen').classList.remove('hidden');
+                document.getElementById('admin-dashboard').classList.add('hidden');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('admin-pass').value.trim();
+            if (pass === ADMIN_PIN || pass === 'admin') {
+                sessionStorage.setItem('mk_admin_auth', 'true');
+                checkAuth();
+            } else {
+                alert("Parol noto'g'ri! (standart parol: 1234)");
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('mk_admin_auth');
+            checkAuth();
+        }
+
+        const DEFAULT_PROJECTS = [
+            {
+                id: "proj_1",
+                title: "Sehat",
+                category: "mobile",
+                badge: "Flutter Mobile App",
+                badgeType: "Mobile",
+                description: "Aholi salomatligini kuzatish, shifokorlar bilan onlayn konsultatsiya va tibbiy eslatmalar uchun mo'ljallangan qulay mobil ilova.",
+                techStack: "Flutter • Dart • Firebase",
+                icon: "heart-pulse",
+                theme: "purple",
+                link: "https://t.me/flutterdevuz_m"
+            },
+            {
+                id: "proj_2",
+                title: "Sehat Clinic",
+                category: "web",
+                badge: "CRM & Management System",
+                badgeType: "Veb & Backend",
+                description: "Tibbiyot klinikalari, bemorlar navbati, shifokorlar jadvali va to'lovlar hisob-kitobini avtomatlashtiruvchi kompleks boshqaruv tizimi (CRM).",
+                techStack: "Backend API • Database • Dashboard",
+                icon: "building-2",
+                theme: "pink",
+                link: "https://t.me/flutterdevuz_m"
+            },
+            {
+                id: "proj_3",
+                title: "Agrorent",
+                category: "mobile",
+                badge: "Agro-Tech Platform",
+                badgeType: "Mobile & Veb",
+                description: "Qishloq xo'jaligi texnikalarini qidirish, ijaraga berish va xizmat ko'rsatishni osonlashtiruvchi zamonaviy agro-bozor platformasi.",
+                techStack: "Flutter • Geolocation • REST API",
+                icon: "tractor",
+                theme: "emerald",
+                link: "https://t.me/flutterdevuz_m"
+            },
+            {
+                id: "proj_4",
+                title: "Sahhof",
+                category: "web",
+                badge: "E-Commerce Store",
+                badgeType: "E-Commerce",
+                description: "Kitob do'konlari va noshirlar uchun elektron savdo platformasi: qulay to'lov, yetkazib berish va kitoblar katalogi.",
+                techStack: "Veb • To'lov tizimlari • Cart",
+                icon: "shopping-bag",
+                theme: "amber",
+                link: "https://t.me/flutterdevuz_m"
+            },
+            {
+                id: "proj_5",
+                title: "E-Book",
+                category: "mobile",
+                badge: "Reader & Audio App",
+                badgeType: "Mobile App",
+                description: "Elektron kitoblarni qulay shrift va tungi rejimda o'qish, audio kitoblarni tinglash va shaxsiy kutubxona boshqarish ilovasi.",
+                techStack: "Flutter • Audio Player • PDF Reader",
+                icon: "book-open",
+                theme: "blue",
+                link: "https://t.me/flutterdevuz_m"
+            },
+            {
+                id: "proj_6",
+                title: "UI/UX & Brending",
+                category: "design",
+                badge: "Design Systems & UI",
+                badgeType: "Dizayn",
+                description: "Startaplar va bizneslar uchun zamonaviy mobil interfeyslar, logotip konsepsiyalari va to'liq brending vizual identikasi.",
+                techStack: "Figma • Photoshop • Identity",
+                icon: "figma",
+                theme: "violet",
+                link: "https://t.me/flutterdevuz_m"
+            }
+        ];
+
+        function getProjects() {
+            const saved = localStorage.getItem('mk_portfolio_projects');
+            if (saved) {
+                try {
+                    return JSON.parse(saved);
+                } catch (e) {}
+            }
+            return DEFAULT_PROJECTS;
+        }
+
+        function saveProjects(projects) {
+            localStorage.setItem('mk_portfolio_projects', JSON.stringify(projects));
+            renderAdminProjects();
+        }
+
+        function resetDefaults() {
+            if (confirm("Rostdan ham barcha loyihalarni standart holatga qaytarmoqchimisiz?")) {
+                localStorage.setItem('mk_portfolio_projects', JSON.stringify(DEFAULT_PROJECTS));
+                renderAdminProjects();
+                alert("Loyihalar standart holatga qaytarildi!");
+            }
+        }
+
+        function renderAdminProjects() {
+            const list = document.getElementById('admin-projects-list');
+            if (!list) return;
+
+            const projects = getProjects();
+            document.getElementById('stat-total').textContent = projects.length;
+
+            list.innerHTML = '';
+
+            projects.forEach((proj, idx) => {
+                const card = document.createElement('div');
+                card.className = "rounded-2xl border border-white/10 bg-[#0e0e13] p-5 flex flex-col justify-between hover:border-purple-500/40 transition duration-300";
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                                ${proj.badgeType || proj.category}
+                            </span>
+                            <span class="text-xs text-gray-500">#${idx + 1}</span>
+                        </div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-purple-400 shrink-0">
+                                <i data-lucide="${proj.icon || 'folder'}" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white">${proj.title}</h4>
+                                <p class="text-xs text-gray-400">${proj.badge}</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 line-clamp-2 mb-4">${proj.description}</p>
+                        <div class="text-[11px] text-gray-500 bg-black/40 p-2 rounded-lg border border-white/5 mb-4">
+                            <strong>Stack:</strong> ${proj.techStack}
+                        </div>
+                    </div>
+                    
+                    <div class="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
+                        <span class="text-[11px] text-gray-500 capitalize">Mavzu: ${proj.theme}</span>
+                        <div class="flex items-center gap-2">
+                            <button onclick="editProject('${proj.id}')" 
+                                    class="px-3 py-1.5 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-300 hover:bg-purple-500 hover:text-white text-xs font-semibold transition flex items-center gap-1">
+                                <i data-lucide="edit-3" class="w-3 h-3"></i> Tahrirlash
+                            </button>
+                            <button onclick="deleteProject('${proj.id}')" 
+                                    class="p-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500 hover:text-white transition" title="O'chirish">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                list.appendChild(card);
+            });
+
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }
+
+        const modal = document.getElementById('project-modal');
+
+        function openAddModal() {
+            document.getElementById('modal-title').textContent = "Yangi Loyiha Qo'shish";
+            document.getElementById('form-project-id').value = "";
+            document.getElementById('project-form').reset();
+            document.getElementById('form-link').value = "https://t.me/flutterdevuz_m";
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function editProject(id) {
+            const projects = getProjects();
+            const proj = projects.find(p => p.id === id);
+            if (!proj) return;
+
+            document.getElementById('modal-title').textContent = "Loyihani Tahrirlash";
+            document.getElementById('form-project-id').value = proj.id;
+            document.getElementById('form-title').value = proj.title;
+            document.getElementById('form-category').value = proj.category;
+            document.getElementById('form-badge').value = proj.badge;
+            document.getElementById('form-badge-type').value = proj.badgeType || "";
+            document.getElementById('form-description').value = proj.description;
+            document.getElementById('form-tech-stack').value = proj.techStack;
+            document.getElementById('form-theme').value = proj.theme || "purple";
+            document.getElementById('form-icon').value = proj.icon || "smartphone";
+            document.getElementById('form-link').value = proj.link || "https://t.me/flutterdevuz_m";
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function handleSaveProject(e) {
+            e.preventDefault();
+            const id = document.getElementById('form-project-id').value;
+            const title = document.getElementById('form-title').value.trim();
+            const category = document.getElementById('form-category').value;
+            const badge = document.getElementById('form-badge').value.trim();
+            const badgeType = document.getElementById('form-badge-type').value.trim();
+            const description = document.getElementById('form-description').value.trim();
+            const techStack = document.getElementById('form-tech-stack').value.trim();
+            const theme = document.getElementById('form-theme').value;
+            const icon = document.getElementById('form-icon').value;
+            const link = document.getElementById('form-link').value.trim() || "https://t.me/flutterdevuz_m";
+
+            let projects = getProjects();
+
+            if (id) {
+                const index = projects.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    projects[index] = { id, title, category, badge, badgeType, description, techStack, theme, icon, link };
+                }
+            } else {
+                const newId = "proj_" + Date.now();
+                projects.push({ id: newId, title, category, badge, badgeType, description, techStack, theme, icon, link });
+            }
+
+            saveProjects(projects);
+            closeModal();
+            alert("Loyiha muvaffaqiyatli saqlandi!");
+        }
+
+        function deleteProject(id) {
+            if (confirm("Haqiqatdan ham ushbu loyihani o'chirmoqchimisiz?")) {
+                let projects = getProjects();
+                projects = projects.filter(p => p.id !== id);
+                saveProjects(projects);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            if (window.lucide) lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

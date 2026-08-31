@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammadsodiq Kozimov | Mobile & Full-stack Dasturchi</title>
+    <meta name="description" content="Kozimov Muhammadsodiq - Mobile (Flutter), Backend, Frontend Dasturchi va Grafik Dizayner portfoliosi.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            950: '#030303',
+                            900: '#070707',
+                            850: '#0c0c0e',
+                            800: '#121216',
+                            700: '#1a1a22',
+                        },
+                        brand: {
+                            purple: '#8b5cf6',
+                            violet: '#a855f7',
+                            pink: '#ec4899',
+                            cyan: '#06b6d4',
+                            blue: '#3b82f6',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#050505] text-gray-100 font-sans antialiased selection:bg-purple-600 selection:text-white overflow-x-hidden">
+
+    <!-- Background Ambient Glows -->
+    <div class="fixed top-0 left-1/4 w-[600px] h-[600px] bg-purple-600/15 rounded-full blur-[160px] pointer-events-none -z-10 animate-pulse"></div>
+    <div class="fixed bottom-10 right-10 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[180px] pointer-events-none -z-10"></div>
+    <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-violet-800/5 rounded-full blur-[200px] pointer-events-none -z-10"></div>
+
+    <!-- Header / Navbar -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-5 sm:py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="relative flex items-center justify-between rounded-full border border-white/10 bg-black/50 backdrop-blur-2xl px-6 sm:px-8 h-16 sm:h-20 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center gap-1.5 group">
+                    <span class="text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-violet-400 via-purple-500 to-pink-500 bg-clip-text text-transparent group-hover:scale-105 transition-transform">MK</span>
+                    <span class="text-2xl sm:text-3xl font-bold text-white tracking-tighter">.dev</span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden lg:flex items-center gap-9">
+                    <a href="#home" class="nav-link text-white text-[15px] font-medium transition-all duration-300 hover:text-purple-400 hover:-translate-y-0.5">Bosh sahifa</a>
+                    <a href="#about" class="nav-link text-gray-300 text-[15px] font-medium transition-all duration-300 hover:text-purple-400 hover:-translate-y-0.5">Men haqimda</a>
+                    <a href="#services" class="nav-link text-gray-300 text-[15px] font-medium transition-all duration-300 hover:text-purple-400 hover:-translate-y-0.5">Xizmatlar</a>
+                    <a href="#portfolio" class="nav-link text-gray-300 text-[15px] font-medium transition-all duration-300 hover:text-purple-400 hover:-translate-y-0.5">Portfolio</a>
+                    <a href="#skills" class="nav-link text-gray-300 text-[15px] font-medium transition-all duration-300 hover:text-purple-400 hover:-translate-y-0.5">Ko'nikmalar</a>
+                    <a href="#contact" class="nav-link text-gray-300 text-[15px] font-medium transition-all duration-300 hover:text-purple-400 hover:-translate-y-0.5">Aloqa</a>
+                </div>
+
+                <!-- Right Action Buttons -->
+                <div class="flex items-center gap-3">
+                    <a href="https://t.me/flutterdevuz_m" target="_blank" rel="noopener noreferrer" 
+                       class="hidden sm:inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-5 py-2.5 text-xs font-semibold text-purple-300 hover:bg-purple-500 hover:text-white hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] transition-all duration-300">
+                        <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                        <span>Telegram</span>
+                    </a>
+                    
+                    <!-- Mobile Hamburger Button -->
+                    <button id="mobile-menu-btn" aria-label="Menyu" class="lg:hidden w-11 h-11 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl flex items-center justify-center transition-all duration-300 hover:bg-purple-500 hover:border-purple-500">
+                        <div class="flex flex-col gap-1.5 w-5">
+                            <span id="burger-line-1" class="block w-full h-0.5 bg-white transition-all duration-300"></span>
+                            <span id="burger-line-2" class="block w-full h-0.5 bg-white transition-all duration-300"></span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Dropdown -->
+                <div id="mobile-menu" class="lg:hidden absolute top-[calc(100%+12px)] left-0 right-0 rounded-[28px] border border-white/10 bg-[#09090b]/95 backdrop-blur-3xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-300 origin-top opacity-0 scale-95 -translate-y-3 pointer-events-none">
+                    <div class="p-5 flex flex-col gap-2">
+                        <a href="#home" class="mobile-nav-link rounded-2xl px-5 py-3.5 text-white font-medium hover:bg-white/5 hover:text-purple-400 transition">Bosh sahifa</a>
+                        <a href="#about" class="mobile-nav-link rounded-2xl px-5 py-3.5 text-gray-300 font-medium hover:bg-white/5 hover:text-purple-400 transition">Men haqimda</a>
+                        <a href="#services" class="mobile-nav-link rounded-2xl px-5 py-3.5 text-gray-300 font-medium hover:bg-white/5 hover:text-purple-400 transition">Xizmatlar</a>
+                        <a href="#portfolio" class="mobile-nav-link rounded-2xl px-5 py-3.5 text-gray-300 font-medium hover:bg-white/5 hover:text-purple-400 transition">Portfolio</a>
+                        <a href="#skills" class="mobile-nav-link rounded-2xl px-5 py-3.5 text-gray-300 font-medium hover:bg-white/5 hover:text-purple-400 transition">Ko'nikmalar</a>
+                        <a href="#contact" class="mobile-nav-link rounded-2xl px-5 py-3.5 text-gray-300 font-medium hover:bg-white/5 hover:text-purple-400 transition">Aloqa</a>
+                        <div class="pt-3 mt-2 border-t border-white/10 flex gap-3">
+                            <a href="https://t.me/flutterdevuz_m" target="_blank" class="flex-1 text-center rounded-xl bg-purple-600 py-3 text-sm font-semibold text-white">Telegram</a>
+                            <a href="https://github.com/flutterdevuz" target="_blank" class="flex-1 text-center rounded-xl bg-white/10 py-3 text-sm font-semibold text-white">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen pt-32 sm:pt-36 lg:pt-44 pb-20 flex items-center overflow-hidden">
+        <div class="max-w-7xl mx-auto w-full px-5 sm:px-8">
+            <div class="grid lg:grid-cols-12 items-center gap-12 lg:gap-8">
+                
+                <!-- Left Content -->
+                <div class="lg:col-span-7 relative z-20 text-center lg:text-left">
+                    <!-- Status Badge -->
+                    <div class="inline-flex items-center gap-3 rounded-full border border-purple-500/30 bg-purple-950/40 backdrop-blur-xl px-5 py-2.5 shadow-[0_0_20px_rgba(168,85,247,0.15)]">
+                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></div>
+                        <span class="text-xs sm:text-sm font-semibold tracking-wider uppercase bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
+                            Mobile • Backend • Frontend • UI/UX
+                        </span>
+                    </div>
+
+                    <!-- Main Heading -->
+                    <h1 class="mt-8 text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1]">
+                        <span class="bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                            Muhammadsodiq
+                        </span>
+                        <br>
+                        <span class="text-white">Kozimov</span>
+                    </h1>
+
+                    <!-- Subtitle / Bio -->
+                    <p class="mt-6 text-base sm:text-lg lg:text-xl text-gray-300 max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                        <span class="font-semibold text-purple-300">Flutter Mobile, Backend (API & DB), Frontend</span> va zamonaviy <span class="font-semibold text-pink-300">Grafik Dizayn</span> sohalarida to'liq tsiklli (Full-Cycle) raqamli mahsulotlar yaratuvchi dasturchi.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="mt-10 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-5">
+                        <a href="https://t.me/flutterdevuz_m" target="_blank" rel="noopener noreferrer" 
+                           class="relative group rounded-2xl bg-gradient-to-r from-violet-500 via-purple-600 to-pink-600 px-8 py-4 text-white font-bold text-base transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(168,85,247,0.45)] flex items-center gap-2.5">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            <span>Bog'lanish</span>
+                        </a>
+                        <a href="#portfolio" 
+                           class="rounded-2xl border border-white/15 bg-white/5 px-8 py-4 text-white font-bold text-base backdrop-blur-xl transition-all duration-300 hover:bg-white/10 hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(168,85,247,0.2)] flex items-center gap-2">
+                            <i data-lucide="folder-git-2" class="w-5 h-5 text-purple-400"></i>
+                            <span>Loyihalarim</span>
+                        </a>
+                    </div>
+
+                    <!-- Statistics Cards -->
+                    <div class="grid grid-cols-3 gap-3 sm:gap-6 mt-14 sm:mt-16">
+                        <div class="rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-b from-purple-500/40 to-transparent">
+                            <div class="rounded-2xl sm:rounded-3xl bg-[#0c0c10]/90 backdrop-blur-xl p-4 sm:p-6 text-center lg:text-left border border-white/5">
+                                <h3 id="stat-projects" class="text-2xl sm:text-4xl font-extrabold text-white">20+</h3>
+                                <p class="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-400 font-medium">Bajarilgan loyihalar</p>
+                            </div>
+                        </div>
+                        <div class="rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-b from-pink-500/40 to-transparent">
+                            <div class="rounded-2xl sm:rounded-3xl bg-[#0c0c10]/90 backdrop-blur-xl p-4 sm:p-6 text-center lg:text-left border border-white/5">
+                                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">15+</h3>
+                                <p class="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-400 font-medium">Mijozlar & Hamkorlar</p>
+                            </div>
+                        </div>
+                        <div class="rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-b from-blue-500/40 to-transparent">
+                            <div class="rounded-2xl sm:rounded-3xl bg-[#0c0c10]/90 backdrop-blur-xl p-4 sm:p-6 text-center lg:text-left border border-white/5">
+                                <h3 id="stat-experience" class="text-2xl sm:text-4xl font-extrabold text-white">2+</h3>
+                                <p class="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-400 font-medium">Yillik tajriba</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Photo Container -->
+                <div class="lg:col-span-5 relative flex justify-center mt-6 lg:mt-0">
+                    <!-- Photo Glow Effect -->
+                    <div class="absolute w-[320px] sm:w-[450px] h-[320px] sm:h-[450px] rounded-full bg-gradient-to-tr from-purple-600/30 via-pink-600/25 to-blue-600/20 blur-[120px] -z-10"></div>
+                    
+                    <!-- Image Card Frame -->
+                    <div class="relative group">
+                        <div class="absolute -inset-1.5 rounded-[42px] bg-gradient-to-r from-purple-500 via-pink-500 to-violet-600 opacity-40 blur-lg group-hover:opacity-75 transition duration-700"></div>
+                        <div class="relative overflow-hidden rounded-[38px] border border-white/15 bg-[#0e0e12] p-2 sm:p-3 shadow-2xl">
+                            <img src="photo_2026-08-23_21-23-18.jpg" alt="Muhammadsodiq Kozimov" 
+                                 class="w-[290px] sm:w-[380px] lg:w-[420px] h-[380px] sm:h-[480px] object-cover rounded-[30px] transition-transform duration-700 group-hover:scale-105">
+                        </div>
+
+                        <!-- Floating Telegram Badge -->
+                        <a href="https://t.me/flutterdevuz_m" target="_blank" 
+                           class="absolute -right-2 sm:-right-4 bottom-6 z-20 rounded-2xl border border-white/15 bg-[#121218]/90 backdrop-blur-xl px-5 py-3.5 shadow-2xl flex items-center gap-3 hover:border-purple-500/50 transition-all duration-300 hover:scale-105">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold">Telegram</p>
+                                <p class="text-sm font-bold text-white">@flutterdevuz_m</p>
+                            </div>
+                        </a>
+
+                        <!-- Floating GitHub Badge -->
+                        <a href="https://github.com/flutterdevuz" target="_blank" 
+                           class="absolute -left-2 sm:-left-4 top-10 z-20 rounded-2xl border border-white/15 bg-[#121218]/90 backdrop-blur-xl px-4 py-3 shadow-2xl flex items-center gap-3 hover:border-purple-500/50 transition-all duration-300 hover:scale-105">
+                            <div class="w-9 h-9 rounded-xl bg-white/10 text-white flex items-center justify-center">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold">GitHub</p>
+                                <p class="text-sm font-bold text-white">flutterdevuz</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-28 sm:py-36 relative">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+            <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                
+                <!-- Left Details -->
+                <div class="lg:col-span-7">
+                    <p class="uppercase tracking-[6px] sm:tracking-[8px] text-xs sm:text-sm font-bold text-purple-400 mb-4 flex items-center gap-2">
+                        <span class="w-8 h-[2px] bg-purple-500 inline-block"></span>
+                        Men haqimda
+                    </p>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold leading-tight text-white mb-8">
+                        Nafaqat kod yozaman, balki <br>
+                        <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent">
+                            to'liq biznes yechimlarini
+                        </span> yarataman.
+                    </h2>
+                    
+                    <div class="space-y-5 text-gray-300 text-base sm:text-lg leading-relaxed">
+                        <p>
+                            Men <strong class="text-white">Muhammadsodiq Kozimov</strong> — Mobil ilovalar (Flutter/Dart), Backend serverlar, zamonaviy Frontend veb-saytlar va professional Grafik/UI dizayn sohalarida tajribaga ega dasturchiman.
+                        </p>
+                        <p class="text-gray-400">
+                            Mening asosiy maqsadim — biznesingiz va startaplaringiz uchun g'oyadan boshlab to to'liq ishga tushirilgan, yuqori yuklamalarga bardoshli va ko'rkam dizaynga ega raqamli mahsulotlarni noldan yaratishdir.
+                        </p>
+                    </div>
+
+                    <!-- Highlights Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="smartphone" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm sm:text-base">Cross-Platform Mobile</h4>
+                                <p class="text-xs text-gray-400">Flutter (iOS & Android)</p>
+                            </div>
+                        </div>
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-pink-500/10 text-pink-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="server" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm sm:text-base">Xavfsiz Backend</h4>
+                                <p class="text-xs text-gray-400">API, Database & Cloud</p>
+                            </div>
+                        </div>
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="layout" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm sm:text-base">Zamonaviy Frontend</h4>
+                                <p class="text-xs text-gray-400">Tezkor & Responsive Saytlar</p>
+                            </div>
+                        </div>
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="palette" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm sm:text-base">UI/UX & Grafik Dizayn</h4>
+                                <p class="text-xs text-gray-400">Figma, Brending & Interfeys</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="mt-10 flex flex-wrap gap-4">
+                        <a href="https://t.me/flutterdevuz_m" target="_blank" 
+                           class="inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-600 px-7 py-3.5 font-bold text-white transition hover:scale-105 shadow-[0_0_30px_rgba(168,85,247,0.3)]">
+                            <i data-lucide="message-square" class="w-5 h-5"></i>
+                            <span>Men bilan bog'lanish</span>
+                        </a>
+                        <a href="tel:+998934477774" 
+                           class="inline-flex items-center gap-3 rounded-2xl border border-white/15 bg-white/5 px-7 py-3.5 font-bold text-white hover:bg-white/10 transition">
+                            <i data-lucide="phone-call" class="w-5 h-5 text-purple-400"></i>
+                            <span>+998 93 447 77 74</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Big Card -->
+                <div class="lg:col-span-5">
+                    <div class="rounded-3xl p-[1px] bg-gradient-to-b from-purple-500/40 via-pink-500/20 to-transparent">
+                        <div class="rounded-3xl bg-[#0c0c11] p-8 border border-white/10">
+                            <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                                <i data-lucide="sparkles" class="w-5 h-5 text-purple-400"></i>
+                                Ish tamoyillarim
+                            </h3>
+                            <ul class="space-y-5 text-sm text-gray-300">
+                                <li class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0 mt-0.5">✓</div>
+                                    <div>
+                                        <strong class="text-white block font-semibold">Toza va Sifatli Kod (Clean Architecture)</strong>
+                                        Loyiha kelajakda oson kengaytiriladigan va tez ishlaydigan qilib quriladi.
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-pink-500/20 text-pink-400 flex items-center justify-center shrink-0 mt-0.5">✓</div>
+                                    <div>
+                                        <strong class="text-white block font-semibold">User-Friendly UI/UX</strong>
+                                        Har bir tugma va sahifa foydalanuvchiga maksimal qulaylik yaratish uchun o'ylanadi.
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 mt-0.5">✓</div>
+                                    <div>
+                                        <strong class="text-white block font-semibold">O'z vaqtida yetkazib berish (Deadline)</strong>
+                                        Loyiha belgilangan muddatda va to'liq test qilingan holda topshiriladi.
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div class="mt-8 pt-6 border-t border-white/10 flex items-center justify-between text-xs text-gray-400">
+                                <span>Manzil: O'zbekiston</span>
+                                <span class="text-emerald-400 font-semibold flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Yangi loyihalarga ochiqman
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-28 sm:py-36 bg-[#08080a] relative">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
+                <p class="uppercase tracking-[6px] sm:tracking-[8px] text-xs sm:text-sm font-bold text-purple-400 mb-3">Xizmatlar</p>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+                    Siz uchun qanday xizmatlar <br>
+                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">ko'rsata olaman?</span>
+                </h2>
+                <p class="mt-4 text-gray-400 text-sm sm:text-base">
+                    G'oyangizni boshlang'ich dizaynidan tortib, to'liq ishlaydigan mobil ilova va veb-platformagacha yaratib beraman.
+                </p>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+                
+                <!-- Service 1 -->
+                <div class="service-card group rounded-[32px] border border-white/10 bg-[#111116]/80 backdrop-blur-xl p-8 sm:p-10 transition-all duration-300 hover:border-purple-500/60 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(168,85,247,0.15)] relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <span class="text-3xl sm:text-4xl font-extrabold text-purple-500/40 group-hover:text-purple-400 transition-colors">01</span>
+                        <div class="w-14 h-14 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300">
+                            <i data-lucide="smartphone" class="w-7 h-7"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mt-6 group-hover:text-purple-300 transition-colors">
+                        Mobile Dasturlash (Flutter)
+                    </h3>
+                    <p class="text-gray-400 mt-4 leading-relaxed text-sm sm:text-base">
+                        iOS va Android tizimlari uchun yagona kod bazasida ishlovchi tezkor, chiroyli animatsiyalarga ega, xavfsiz va qulay mobil ilovalar yaratish.
+                    </p>
+                    <div class="mt-8 flex flex-wrap gap-2 text-xs font-semibold text-gray-400">
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">Flutter</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">Dart</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">Bloc / Provider</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">App Store / Play Market</span>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card group rounded-[32px] border border-white/10 bg-[#111116]/80 backdrop-blur-xl p-8 sm:p-10 transition-all duration-300 hover:border-pink-500/60 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(236,72,153,0.15)] relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <span class="text-3xl sm:text-4xl font-extrabold text-pink-500/40 group-hover:text-pink-400 transition-colors">02</span>
+                        <div class="w-14 h-14 rounded-2xl bg-pink-500/10 text-pink-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-pink-500 group-hover:text-white transition-all duration-300">
+                            <i data-lucide="server" class="w-7 h-7"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mt-6 group-hover:text-pink-300 transition-colors">
+                        Backend & API Dasturlash
+                    </h3>
+                    <p class="text-gray-400 mt-4 leading-relaxed text-sm sm:text-base">
+                        Yuqori yuklamalarga chidamli serverlar, RESTful API arxitekturasi, ma'lumotlar bazasi (SQL / NoSQL) integratsiyasi, to'lov tizimlari va avtorizatsiya.
+                    </p>
+                    <div class="mt-8 flex flex-wrap gap-2 text-xs font-semibold text-gray-400">
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">Node.js</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">Python</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">PostgreSQL</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">REST API / JWT</span>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card group rounded-[32px] border border-white/10 bg-[#111116]/80 backdrop-blur-xl p-8 sm:p-10 transition-all duration-300 hover:border-blue-500/60 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(59,130,246,0.15)] relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <span class="text-3xl sm:text-4xl font-extrabold text-blue-500/40 group-hover:text-blue-400 transition-colors">03</span>
+                        <div class="w-14 h-14 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+                            <i data-lucide="globe" class="w-7 h-7"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mt-6 group-hover:text-blue-300 transition-colors">
+                        Frontend & Veb Ilovalar
+                    </h3>
+                    <p class="text-gray-400 mt-4 leading-relaxed text-sm sm:text-base">
+                        Har qanday ekran o'lchamiga moslashuvchan, SEO optimallashtirilgan, tezkor va interaktiv zamonaviy landing sahifalar va veb-servislar.
+                    </p>
+                    <div class="mt-8 flex flex-wrap gap-2 text-xs font-semibold text-gray-400">
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">HTML5 / CSS3</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">JavaScript</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">Tailwind CSS</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">Responsive Web</span>
+                    </div>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="service-card group rounded-[32px] border border-white/10 bg-[#111116]/80 backdrop-blur-xl p-8 sm:p-10 transition-all duration-300 hover:border-violet-500/60 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(139,92,246,0.15)] relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <span class="text-3xl sm:text-4xl font-extrabold text-violet-500/40 group-hover:text-violet-400 transition-colors">04</span>
+                        <div class="w-14 h-14 rounded-2xl bg-violet-500/10 text-violet-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-violet-500 group-hover:text-white transition-all duration-300">
+                            <i data-lucide="palette" class="w-7 h-7"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mt-6 group-hover:text-violet-300 transition-colors">
+                        Grafik & UI/UX Dizayn
+                    </h3>
+                    <p class="text-gray-400 mt-4 leading-relaxed text-sm sm:text-base">
+                        Mobil ilova va veb-saytlar uchun zamonaviy interfeyslar, logotip, brending va professional reklama vizuallari dizayni.
+                    </p>
+                    <div class="mt-8 flex flex-wrap gap-2 text-xs font-semibold text-gray-400">
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">Figma UI/UX</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">Photoshop</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">Logo & Brending</span>
+                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/5">Prototyping</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section (Dynamically Loaded from Admin / LocalStorage) -->
+    <section id="portfolio" class="py-28 sm:py-36 relative">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 sm:mb-16">
+                <div>
+                    <p class="uppercase tracking-[6px] sm:tracking-[8px] text-xs sm:text-sm font-bold text-purple-400 mb-3">Portfolio</p>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">Saralangan loyihalar</h2>
+                </div>
+                <p class="text-gray-400 max-w-md text-sm sm:text-base">
+                    Mobil ilovalar, backend tizimlari, klinika boshqaruvi, elektron savdo va ijara platformalari bo'yicha real amaliy ishlarim.
+                </p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-4 mb-10 no-scrollbar">
+                <button class="filter-btn active-filter shrink-0 rounded-full px-6 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-300" data-filter="all">
+                    Barchasi
+                </button>
+                <button class="filter-btn inactive-filter shrink-0 rounded-full px-6 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-300" data-filter="mobile">
+                    Mobile Ilovalar
+                </button>
+                <button class="filter-btn inactive-filter shrink-0 rounded-full px-6 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-300" data-filter="web">
+                    Veb & Backend
+                </button>
+                <button class="filter-btn inactive-filter shrink-0 rounded-full px-6 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-300" data-filter="design">
+                    UI/UX & Dizayn
+                </button>
+            </div>
+
+            <!-- Dynamic Projects Container (Populated via JavaScript) -->
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Projects will be dynamically injected here -->
+            </div>
+
+            <!-- GitHub CTA -->
+            <div class="flex justify-center mt-14 sm:mt-16">
+                <a href="https://github.com/flutterdevuz" target="_blank" rel="noopener noreferrer" 
+                   class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl px-8 py-4 text-sm sm:text-base font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-white/10 hover:border-purple-500/40 hover:shadow-[0_0_35px_rgba(168,85,247,0.25)]">
+                    <i data-lucide="github" class="w-5 h-5 text-purple-400"></i>
+                    <span>GitHub orqali barcha kodlarni ko'rish</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills & Tech Stack Section -->
+    <section id="skills" class="py-24 sm:py-32 bg-[#08080a] relative">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <p class="uppercase tracking-[6px] sm:tracking-[8px] text-xs sm:text-sm font-bold text-purple-400 mb-3">Ko'nikmalar</p>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+                    Texnologiyalar & Asboblar
+                </h2>
+                <p class="mt-4 text-gray-400 text-sm sm:text-base">
+                    Loyiha talablariga mos eng so'nggi va ishonchli texnologiyalar bilan ishlayman.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
+                <!-- Flutter -->
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6 text-center hover:border-purple-500/50 hover:bg-purple-500/5 transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mx-auto mb-3 font-bold text-xl">F</div>
+                    <h4 class="font-bold text-white text-base">Flutter</h4>
+                    <p class="text-xs text-gray-400 mt-1">Mobile (iOS & Android)</p>
+                </div>
+                <!-- Dart -->
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6 text-center hover:border-purple-500/50 hover:bg-purple-500/5 transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mx-auto mb-3 font-bold text-xl">D</div>
+                    <h4 class="font-bold text-white text-base">Dart</h4>
+                    <p class="text-xs text-gray-400 mt-1">Dasturlash tili</p>
+                </div>
+                <!-- Backend Node/Python -->
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6 text-center hover:border-purple-500/50 hover:bg-purple-500/5 transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="server" class="w-6 h-6"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-base">Backend & API</h4>
+                    <p class="text-xs text-gray-400 mt-1">Node.js / Python</p>
+                </div>
+                <!-- Database -->
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6 text-center hover:border-purple-500/50 hover:bg-purple-500/5 transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="database" class="w-6 h-6"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-base">Ma'lumotlar bazasi</h4>
+                    <p class="text-xs text-gray-400 mt-1">PostgreSQL / MongoDB</p>
+                </div>
+                <!-- Frontend -->
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6 text-center hover:border-purple-500/50 hover:bg-purple-500/5 transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="code" class="w-6 h-6"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-base">Frontend</h4>
+                    <p class="text-xs text-gray-400 mt-1">HTML, CSS, JS, Tailwind</p>
+                </div>
+                <!-- Figma & UI/UX -->
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-6 text-center hover:border-purple-500/50 hover:bg-purple-500/5 transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-pink-500/10 text-pink-400 flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="figma" class="w-6 h-6"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-base">UI/UX Dizayn</h4>
+                    <p class="text-xs text-gray-400 mt-1">Figma & Photoshop</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-28 sm:py-36 relative">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8">
+            <div class="rounded-[40px] p-[1px] bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500">
+                <div class="rounded-[40px] bg-[#08080c] p-8 sm:p-12 lg:p-16 grid lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Contact Info -->
+                    <div class="lg:col-span-6">
+                        <span class="text-xs font-bold uppercase tracking-widest text-purple-400 bg-purple-950/80 px-4 py-1.5 rounded-full border border-purple-500/30">
+                            Hamkorlik & Aloqa
+                        </span>
+                        <h2 class="text-3xl sm:text-5xl font-extrabold leading-tight text-white mt-6">
+                            Birgalikda yangi <br>
+                            <span class="bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                                loyiha boshlaymizmi?
+                            </span>
+                        </h2>
+                        <p class="mt-6 text-gray-300 text-base sm:text-lg leading-relaxed">
+                            O'zingizning g'oyangiz yoki biznes loyihangiz bo'yicha konsultatsiya olish yoki buyurtma berish uchun istalgan qulay usulda bog'lanishingiz mumkin.
+                        </p>
+
+                        <!-- Contact List -->
+                        <div class="mt-8 space-y-4">
+                            <a href="https://t.me/flutterdevuz_m" target="_blank" 
+                               class="flex items-center gap-4 p-4 rounded-2xl border border-white/10 bg-white/5 hover:border-purple-500/50 hover:bg-purple-500/10 transition duration-300">
+                                <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
+                                    <i data-lucide="send" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-400 font-medium">Telegram</p>
+                                    <p class="text-base font-bold text-white">@flutterdevuz_m</p>
+                                </div>
+                            </a>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <a href="tel:+998934477774" 
+                                   class="flex items-center gap-3 p-4 rounded-2xl border border-white/10 bg-white/5 hover:border-emerald-500/50 hover:bg-emerald-500/10 transition duration-300">
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                                        <i data-lucide="phone" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[11px] text-gray-400 font-medium">Asosiy Raqam</p>
+                                        <p class="text-sm font-bold text-white">+998 93 447 77 74</p>
+                                    </div>
+                                </a>
+
+                                <a href="tel:+998934472477" 
+                                   class="flex items-center gap-3 p-4 rounded-2xl border border-white/10 bg-white/5 hover:border-emerald-500/50 hover:bg-emerald-500/10 transition duration-300">
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                                        <i data-lucide="phone" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[11px] text-gray-400 font-medium">Qo'shimcha Raqam</p>
+                                        <p class="text-sm font-bold text-white">+998 93 447 24 77</p>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <a href="https://github.com/flutterdevuz" target="_blank" 
+                               class="flex items-center gap-4 p-4 rounded-2xl border border-white/10 bg-white/5 hover:border-blue-500/50 hover:bg-blue-500/10 transition duration-300">
+                                <div class="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center shrink-0">
+                                    <i data-lucide="github" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-400 font-medium">GitHub Repository</p>
+                                    <p class="text-base font-bold text-white">github.com/flutterdevuz</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Interactive Message Card -->
+                    <div class="lg:col-span-6 bg-[#111118]/90 rounded-3xl p-6 sm:p-8 border border-white/10">
+                        <h3 class="text-xl font-bold text-white mb-2">Tezkor xabar yuborish</h3>
+                        <p class="text-xs text-gray-400 mb-6">Xabaringiz to'g'ridan-to'g'ri Telegram orqali qabul qilinadi.</p>
+                        
+                        <form id="contact-form" class="space-y-4" onsubmit="handleContactSubmit(event)">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 mb-1.5">Ismingiz</label>
+                                <input type="text" id="sender-name" required placeholder="Masalan: Sardor" 
+                                       class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 mb-1.5">Telefon raqamingiz yoki Telegram</label>
+                                <input type="text" id="sender-contact" required placeholder="+998 90 123 45 67 yoki @username" 
+                                       class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 mb-1.5">Loyiha haqida qisqacha</label>
+                                <textarea id="sender-msg" rows="4" required placeholder="Qanday loyiha yaratmoqchisiz?" 
+                                          class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 transition"></textarea>
+                            </div>
+                            <button type="submit" 
+                                    class="w-full rounded-xl bg-gradient-to-r from-violet-500 via-purple-600 to-pink-600 py-3.5 text-sm font-bold text-white transition hover:opacity-90 hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] flex items-center justify-center gap-2">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                <span>Telegram orqali yuborish</span>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-white/10 bg-[#040406]">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+            <div class="flex items-center gap-2">
+                <span class="text-xl font-extrabold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">MK.dev</span>
+                <span class="text-gray-500 text-sm">| © <span id="current-year">2026</span> Kozimov Muhammadsodiq. Barcha huquqlar himoyalangan.</span>
+            </div>
+            
+            <!-- Social Icons -->
+            <div class="flex items-center gap-4">
+                <a href="https://t.me/flutterdevuz_m" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-500 hover:bg-purple-500/20 transition">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                </a>
+                <a href="https://github.com/flutterdevuz" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-500 hover:bg-purple-500/20 transition">
+                    <i data-lucide="github" class="w-4 h-4"></i>
+                </a>
+                <a href="tel:+998934477774" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-500 hover:bg-purple-500/20 transition">
+                    <i data-lucide="phone" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+</body>
+</html>
