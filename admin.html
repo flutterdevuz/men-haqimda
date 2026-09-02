@@ -145,7 +145,7 @@
             <div class="flex items-center justify-between mb-6">
                 <div>
                     <h2 class="text-xl sm:text-2xl font-bold text-white">Loyihalar Ro'yxati</h2>
-                    <p class="text-xs text-gray-400 mt-1">Loyiha qo'shish, tahrirlash va o'chirish</p>
+                    <p class="text-xs text-gray-400 mt-1">Loyiha qo'shish, tahrirlash va GitHub/Demo havolalarini boshqarish</p>
                 </div>
                 <button onclick="openAddModal()" 
                         class="inline-flex items-center gap-2 rounded-xl border border-purple-500/30 bg-purple-500/10 px-4 py-2 text-xs font-bold text-purple-300 hover:bg-purple-500 hover:text-white transition">
@@ -223,7 +223,7 @@
                            class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none transition">
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <!-- Color Theme -->
                     <div>
                         <label class="block text-xs font-semibold text-gray-300 mb-1">Rang Mavzusi</label>
@@ -241,27 +241,36 @@
                     <div>
                         <label class="block text-xs font-semibold text-gray-300 mb-1">Ikonka Nomi</label>
                         <select id="form-icon" class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white focus:border-purple-500 focus:outline-none transition">
-                            <option value="smartphone">smartphone (Mobil)</option>
+                            <option value="smartphone">smartphone (Mobil ilova)</option>
                             <option value="heart-pulse">heart-pulse (Tibbiyot/Salomatlik)</option>
                             <option value="building-2">building-2 (Klinika/Bino)</option>
-                            <option value="tractor">tractor (Agro)</option>
-                            <option value="shopping-bag">shopping-bag (Do'kon)</option>
+                            <option value="tractor">tractor (Agrorent)</option>
+                            <option value="shopping-bag">shopping-bag (Sahhof Do'kon)</option>
                             <option value="book-open">book-open (Kitob/E-Book)</option>
-                            <option value="figma">figma (Dizayn)</option>
-                            <option value="server">server (Backend)</option>
+                            <option value="figma">figma (UI/UX Dizayn)</option>
+                            <option value="palette">palette (Grafik Dizayn)</option>
+                            <option value="server">server (Backend & API)</option>
                             <option value="globe">globe (Veb sayt)</option>
                             <option value="code">code (Dastur)</option>
-                            <option value="palette">palette (Rang/San'at)</option>
-                            <option value="layers">layers (Tizim)</option>
+                            <option value="layers">layers (Tizim/Arxitektura)</option>
                             <option value="cpu">cpu (Texnologiya)</option>
                             <option value="shield">shield (Xavfsizlik)</option>
                             <option value="sparkles">sparkles (Premium)</option>
                         </select>
                     </div>
+                </div>
 
-                    <!-- Link / URL -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- GitHub Link -->
                     <div>
-                        <label class="block text-xs font-semibold text-gray-300 mb-1">Havola (Link)</label>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">GitHub Havolasi (Repo URL)</label>
+                        <input type="text" id="form-github" placeholder="https://github.com/flutterdevuz/loyiha" 
+                               class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none transition">
+                    </div>
+
+                    <!-- Demo / Telegram Link -->
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Demo / Telegram Havolasi</label>
                         <input type="text" id="form-link" placeholder="https://t.me/flutterdevuz_m" 
                                class="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none transition">
                     </div>
@@ -285,6 +294,7 @@
     <!-- Admin JS Logic -->
     <script>
         const ADMIN_PIN = "1234";
+        const CURRENT_DB_VERSION = "mk_v2_2026";
 
         function checkAuth() {
             const isAuth = sessionStorage.getItem('mk_admin_auth');
@@ -325,6 +335,7 @@
                 techStack: "Flutter • Dart • Firebase",
                 icon: "heart-pulse",
                 theme: "purple",
+                github: "https://github.com/flutterdevuz/sehat_mobile_app",
                 link: "https://t.me/flutterdevuz_m"
             },
             {
@@ -337,6 +348,7 @@
                 techStack: "Backend API • Database • Dashboard",
                 icon: "building-2",
                 theme: "pink",
+                github: "https://github.com/flutterdevuz/sehat_clinic_crm",
                 link: "https://t.me/flutterdevuz_m"
             },
             {
@@ -349,6 +361,7 @@
                 techStack: "Flutter • Geolocation • REST API",
                 icon: "tractor",
                 theme: "emerald",
+                github: "https://github.com/flutterdevuz/agrorent_app",
                 link: "https://t.me/flutterdevuz_m"
             },
             {
@@ -361,6 +374,7 @@
                 techStack: "Veb • To'lov tizimlari • Cart",
                 icon: "shopping-bag",
                 theme: "amber",
+                github: "https://github.com/flutterdevuz/sahhof_store",
                 link: "https://t.me/flutterdevuz_m"
             },
             {
@@ -373,6 +387,7 @@
                 techStack: "Flutter • Audio Player • PDF Reader",
                 icon: "book-open",
                 theme: "blue",
+                github: "https://github.com/flutterdevuz/ebook_reader_app",
                 link: "https://t.me/flutterdevuz_m"
             },
             {
@@ -385,31 +400,51 @@
                 techStack: "Figma • Photoshop • Identity",
                 icon: "figma",
                 theme: "violet",
+                github: "https://github.com/flutterdevuz/design-systems-ui",
                 link: "https://t.me/flutterdevuz_m"
             }
         ];
 
         function getProjects() {
             const saved = localStorage.getItem('mk_portfolio_projects');
-            if (saved) {
+            const version = localStorage.getItem('mk_portfolio_version');
+            if (saved && version === CURRENT_DB_VERSION) {
                 try {
                     return JSON.parse(saved);
                 } catch (e) {}
             }
+            localStorage.setItem('mk_portfolio_projects', JSON.stringify(DEFAULT_PROJECTS));
+            localStorage.setItem('mk_portfolio_version', CURRENT_DB_VERSION);
             return DEFAULT_PROJECTS;
         }
 
         function saveProjects(projects) {
             localStorage.setItem('mk_portfolio_projects', JSON.stringify(projects));
+            localStorage.setItem('mk_portfolio_version', CURRENT_DB_VERSION);
             renderAdminProjects();
         }
 
         function resetDefaults() {
             if (confirm("Rostdan ham barcha loyihalarni standart holatga qaytarmoqchimisiz?")) {
                 localStorage.setItem('mk_portfolio_projects', JSON.stringify(DEFAULT_PROJECTS));
+                localStorage.setItem('mk_portfolio_version', CURRENT_DB_VERSION);
                 renderAdminProjects();
                 alert("Loyihalar standart holatga qaytarildi!");
             }
+        }
+
+        function renderAdminIcon(iconName) {
+            if (iconName === 'figma') {
+                return `
+                <svg class="w-5 h-5 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/>
+                    <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/>
+                    <path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/>
+                    <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"/>
+                    <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"/>
+                </svg>`;
+            }
+            return `<i data-lucide="${iconName || 'folder'}" class="w-5 h-5"></i>`;
         }
 
         function renderAdminProjects() {
@@ -435,7 +470,7 @@
                         </div>
                         <div class="flex items-center gap-3 mb-3">
                             <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-purple-400 shrink-0">
-                                <i data-lucide="${proj.icon || 'folder'}" class="w-5 h-5"></i>
+                                ${renderAdminIcon(proj.icon)}
                             </div>
                             <div>
                                 <h4 class="text-lg font-bold text-white">${proj.title}</h4>
@@ -443,8 +478,14 @@
                             </div>
                         </div>
                         <p class="text-xs text-gray-400 line-clamp-2 mb-4">${proj.description}</p>
-                        <div class="text-[11px] text-gray-500 bg-black/40 p-2 rounded-lg border border-white/5 mb-4">
-                            <strong>Stack:</strong> ${proj.techStack}
+                        <div class="text-[11px] text-gray-500 bg-black/40 p-2.5 rounded-lg border border-white/5 mb-3 space-y-1">
+                            <div><strong>Stack:</strong> ${proj.techStack}</div>
+                            <div class="flex items-center gap-2 truncate text-purple-400">
+                                <svg class="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                                </svg>
+                                <span class="truncate">${proj.github || 'Ulangan emas'}</span>
+                            </div>
                         </div>
                     </div>
                     
@@ -477,6 +518,7 @@
             document.getElementById('modal-title').textContent = "Yangi Loyiha Qo'shish";
             document.getElementById('form-project-id').value = "";
             document.getElementById('project-form').reset();
+            document.getElementById('form-github').value = "https://github.com/flutterdevuz";
             document.getElementById('form-link').value = "https://t.me/flutterdevuz_m";
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -498,6 +540,7 @@
             document.getElementById('form-tech-stack').value = proj.techStack;
             document.getElementById('form-theme').value = proj.theme || "purple";
             document.getElementById('form-icon').value = proj.icon || "smartphone";
+            document.getElementById('form-github').value = proj.github || "https://github.com/flutterdevuz";
             document.getElementById('form-link').value = proj.link || "https://t.me/flutterdevuz_m";
 
             modal.classList.remove('hidden');
@@ -521,6 +564,7 @@
             const techStack = document.getElementById('form-tech-stack').value.trim();
             const theme = document.getElementById('form-theme').value;
             const icon = document.getElementById('form-icon').value;
+            const github = document.getElementById('form-github').value.trim() || "https://github.com/flutterdevuz";
             const link = document.getElementById('form-link').value.trim() || "https://t.me/flutterdevuz_m";
 
             let projects = getProjects();
@@ -528,11 +572,11 @@
             if (id) {
                 const index = projects.findIndex(p => p.id === id);
                 if (index !== -1) {
-                    projects[index] = { id, title, category, badge, badgeType, description, techStack, theme, icon, link };
+                    projects[index] = { id, title, category, badge, badgeType, description, techStack, theme, icon, github, link };
                 }
             } else {
                 const newId = "proj_" + Date.now();
-                projects.push({ id: newId, title, category, badge, badgeType, description, techStack, theme, icon, link });
+                projects.push({ id: newId, title, category, badge, badgeType, description, techStack, theme, icon, github, link });
             }
 
             saveProjects(projects);

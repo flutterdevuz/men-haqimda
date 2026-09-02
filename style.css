@@ -66,7 +66,24 @@ html {
 
 /* Card hover animation */
 .service-card, .project-card {
-    will-change: transform;
+    will-change: transform, box-shadow;
+}
+
+/* Smooth ambient glow spreading across card */
+.project-card {
+    background: rgba(14, 14, 19, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* Input validation styles */
+.input-error {
+    border-color: #f43f5e !important;
+    box-shadow: 0 0 0 1px #f43f5e !important;
+}
+
+.input-success {
+    border-color: rgba(16, 185, 129, 0.5) !important;
 }
 
 /* Glowing text selection */
